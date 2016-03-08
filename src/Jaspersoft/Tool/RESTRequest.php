@@ -61,6 +61,7 @@ class RESTRequest
      * @return array
      */
     public $errorCode;
+    
     public static function splitHeaderArray($array)
     {
         $result = array();
