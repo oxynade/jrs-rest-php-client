@@ -5,6 +5,7 @@ use Jaspersoft\Exception\RESTRequestException;
 
 class RESTRequest
 {
+	public $followLocation = false;
 
 	protected $url;
 	protected $verb;
@@ -280,6 +281,10 @@ class RESTRequest
 		curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curlHandle, CURLOPT_HEADER, true);
 
+		if ($this->followLocation) {
+			curl_setopt($curlHandle, CURLOPT_FOLLOWLOCATION, true);
+		}
+
         if (!empty($this->content_type))
             $this->headers[] = "Content-Type: " . $this->content_type;
         if (!empty($this->accept_type))
@@ -539,4 +544,9 @@ class RESTRequest
         }
         return $this->getResponseBody();
     }
+
+	public function followLocation()
+	{
+		$this->followLocation = true;
+	}
 }
