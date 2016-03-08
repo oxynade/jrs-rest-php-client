@@ -269,7 +269,12 @@ class RESTRequest
 
         // strstr returns the matched characters and following characters, but we want to discard of "\r\n\r\n", so
         // we delete the first 4 bytes of the returned string.
-        $this->response_body = substr(strstr($response, "\r\n\r\n"), 4);
+        $response = substr(strstr($response, "\r\n\r\n"), 4);
+	if ($this->followLocation && false !== strpos($response, "\r\n\r\n")) {
+		$response = substr(strstr($response, "\r\n\r\n"), 4);
+	}
+	$this->response_body = trim($response);
+        
         // headers are always separated by \n until the end of the header block which is separated by \r\n\r\n.
         $this->response_headers = explode("\r\n", $headerblock);
 
