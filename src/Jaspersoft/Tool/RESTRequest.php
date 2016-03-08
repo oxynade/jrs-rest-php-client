@@ -5,8 +5,6 @@ use Jaspersoft\Exception\RESTRequestException;
 
 class RESTRequest
 {
-	public $followLocation = false;
-
 	protected $url;
 	protected $verb;
 	protected $request_body;
@@ -18,9 +16,11 @@ class RESTRequest
 	protected $response_body;
 	protected $response_info;
 	protected $file_to_upload = array();
-    protected $headers;
-    protected $curl_timeout;
-    protected $curl_handle;
+    	protected $headers;
+    	protected $curl_timeout;
+    	protected $curl_handle;
+    
+    	private $followLocation = false;
 
 	public function __construct ($url = null, $verb = 'GET', $request_body = null)
 	{
