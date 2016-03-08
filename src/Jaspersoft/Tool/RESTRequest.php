@@ -182,6 +182,10 @@ class RESTRequest
 		}
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->request_body);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+		
+		if ($this->followLocation) {
+			curl_setopt($ch, CURLOPT_POSTREDIR, 3);
+		}
 
 		$this->doExecute($ch);
 	}
