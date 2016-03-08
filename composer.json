@@ -1,5 +1,5 @@
 {
-    "name": "oxynade/jaspersoft-rest-client",
+    "name": "oxynade/jrs-rest-php-client",
     "description": "A client for the JasperReports Server REST API",
     "license": "LGPL-3.0",
     "authors": [
