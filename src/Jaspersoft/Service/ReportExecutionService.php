@@ -218,6 +218,7 @@ class ReportExecutionService extends JRSService
      *
      * @param string $executionId
      * @param string $exportId
+     * @param array $extraExpectedStatuses
      * @return array
      */
     public function getExportOutputResource($executionId, $exportId, $extraExpectedStatuses = array())
