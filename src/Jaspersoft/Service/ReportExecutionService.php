@@ -220,10 +220,12 @@ class ReportExecutionService extends JRSService
      * @param string $exportId
      * @return array
      */
-    public function getExportOutputResource($executionId, $exportId)
+    public function getExportOutputResource($executionId, $exportId, $extraExpectedStatuses = array())
     {
         $url = $this->makeUrl($executionId, false, false, true, true, $exportId);
-        $response = $this->service->makeRequest($url, array(200), 'GET', null, true, 'application/json', '*/*');
+
+        $statuses = array_merge(array(200), $extraExpectedStatuses);
+        $response = $this->service->makeRequest($url, $statuses, 'GET', null, true, 'application/json', '*/*');
 
         $headers = RESTRequest::splitHeaderArray($response['headers']);
 
