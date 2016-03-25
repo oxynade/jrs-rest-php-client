@@ -25,7 +25,7 @@ Add the following to your composer.json file for your project, or run `php compo
 
 Or alternatively, download this package from github, and run `php composer.phar install` in the directory containing composer.json to generate the autoloader, then require the autoloader using
 
-    require_once "vendor/autoload.php"
+	require_once "vendor/autoload.php"
 	
 Additionally, a distributed autoloader is included if oyu want to simply include it in an existing project, or do not want to bother with Composer.
 
