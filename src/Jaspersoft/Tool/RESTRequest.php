@@ -5,8 +5,6 @@ use Jaspersoft\Exception\RESTRequestException;
 
 class RESTRequest
 {
-	public $followLocation = false;
-
 	protected $url;
 	protected $verb;
 	protected $request_body;
@@ -18,9 +16,11 @@ class RESTRequest
 	protected $response_body;
 	protected $response_info;
 	protected $file_to_upload = array();
-    protected $headers;
-    protected $curl_timeout;
-    protected $curl_handle;
+    	protected $headers;
+    	protected $curl_timeout;
+    	protected $curl_handle;
+    
+    	private $followLocation = false;
 
 	public function __construct ($url = null, $verb = 'GET', $request_body = null)
 	{
@@ -61,6 +61,7 @@ class RESTRequest
      * @return array
      */
     public $errorCode;
+    
     public static function splitHeaderArray($array)
     {
         $result = array();
@@ -181,6 +182,10 @@ class RESTRequest
 		}
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->request_body);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+		
+		if ($this->followLocation) {
+			curl_setopt($ch, CURLOPT_POSTREDIR, 3);
+		}
 
 		$this->doExecute($ch);
 	}
@@ -268,7 +273,12 @@ class RESTRequest
 
         // strstr returns the matched characters and following characters, but we want to discard of "\r\n\r\n", so
         // we delete the first 4 bytes of the returned string.
-        $this->response_body = substr(strstr($response, "\r\n\r\n"), 4);
+        $response = substr(strstr($response, "\r\n\r\n"), 4);
+	if ($this->followLocation && false !== strpos($response, "\r\n\r\n")) {
+		$response = substr(strstr($response, "\r\n\r\n"), 4);
+	}
+	$this->response_body = trim($response);
+        
         // headers are always separated by \n until the end of the header block which is separated by \r\n\r\n.
         $this->response_headers = explode("\r\n", $headerblock);
 
