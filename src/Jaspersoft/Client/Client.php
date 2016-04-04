@@ -36,14 +36,14 @@ class Client
     protected $logCollectorService;
     protected $serverService;
 
-	public function __construct($serverUrl, $username, $password, $orgId = null)
+	public function __construct($serverUrl, $username, $password, $orgId = null, RESTRequest $restRequest = null)
 	{
 		$this->serverUrl = $serverUrl;
 		$this->username = $username;
 		$this->password = $password;
 		$this->orgId = $orgId;
 
-		$this->restReq = new RESTRequest();
+		$this->restReq = !is_null($restRequest) ? $restRequest : new RESTRequest();
 		if (!empty($this->orgId)) {
 			$this->restReq->setUsername($this->username .'|'. $this->orgId);
 		} else {
